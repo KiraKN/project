@@ -1,0 +1,332 @@
+const translations = {
+    ru: {
+        welcome: "Добро пожаловать в всеконкурсы.РФ",
+        student: "Я школьник",
+        company: "Я компания",
+        name: "Ваше имя",
+        age: "Ваш возраст",
+        region: "Ваш регион",
+        reset: "Сбросить данные",
+        app_title: "всеконкурсы.РФ",
+        search_student: "Ищу конкурсы по экономике...",
+        economy: "Экономика",
+        school: "Школьники",
+        students: "Студенты",
+        analytics: "Аналитика",
+        upcoming: "Ближайшие",
+        easy: "Лёгкий",
+        medium: "Средний",
+        hard: "Сложный",
+        sort_default: "Сортировка по умолчанию",
+        sort_date: "По дате",
+        sort_rating: "По рейтингу",
+        sort_popularity: "По популярности",
+        ai_recommendations: "ИИ-Рекомендации для вас",
+        recommended: "Рекомендации для вас",
+        all_events: "Все мероприятия",
+        event1_title: "Всероссийский экономический олимп школьников",
+        event1_details: "Экономика | 10.05.2025 | Торжок",
+        event2_title: "Финансовая инициатива для студентов",
+        event2_details: "Экономика | 15.05.2025 | Москва",
+        difficulty_easy: "Уровень: Лёгкий",
+        difficulty_medium: "Уровень: Средний",
+        difficulty_hard: "Уровень: Сложный",
+        average_rating: "Средний рейтинг: ",
+        event_map: "Карта мероприятий",
+        contest_details: "Детали конкурса",
+        format: "Формат:",
+        audience: "Аудитория:",
+        skills: "Навыки:",
+        date: "Дата:",
+        difficulty: "Уровень сложности:",
+        description: "Описание:",
+        contest_description: "Это престижный конкурс для молодых экономистов, где вы сможете продемонстрировать свои аналитические способности.",
+        register: "Зарегистрироваться",
+        share: "Поделиться",
+        export_to_calendar: "Экспорт в календарь",
+        push_notifications: "Включить напоминания",
+        rate_event: "Оценить мероприятие",
+        submit_rating: "Оценить",
+        reviews: "Отзывы",
+        leave_review: "Оставить отзыв",
+        review: "Ваш отзыв...",
+        submit_review: "Отправить отзыв",
+        calendar: "Календарь",
+        upcoming_events: "Предстоящие мероприятия",
+        achievements: "Достижения",
+        your_level: "Ваш уровень: ",
+        level_progress: "0 / 100 баллов до следующего уровня",
+        weekly_challenges: "Еженедельные челленджи",
+        your_awards: "Ваши награды",
+        newbie: "Новичок",
+        newbie_desc: "Зарегистрировались на платформе",
+        active_participant: "Активный участник",
+        active_participant_desc: "Участвовали в 5 мероприятиях",
+        champion: "Чемпион",
+        champion_desc: "Победите в 3 конкурсах",
+        daily_tasks: "Ежедневные задания",
+        notifications: "Уведомления",
+        your_notifications: "Ваши уведомления",
+        chat: "Чат",
+        messages: "Сообщения",
+        message: "Напишите сообщение...",
+        send: "Отправить",
+        stats: "Статистика",
+        your_activity: "Ваша активность",
+        events_month: "Мероприятий за месяц:",
+        reviews_written: "Отзывов оставлено:",
+        points_earned: "Баллов заработано:",
+        messages_sent: "Сообщений отправлено:",
+        friends: "Друзья",
+        your_friends: "Ваши друзья",
+        search_friends: "Найти друзей...",
+        friend_requests: "Запросы в друзья",
+        groups: "Группы",
+        your_groups: "Ваши группы",
+        create_group: "Создать группу",
+        group_chat: "Групповой чат",
+        offline_mode: "Оффлайн-режим",
+        saved_events: "Сохранённые мероприятия",
+        profile: "Личный кабинет",
+        profile_details: "Профиль",
+        name_label: "Имя:",
+        age_label: "Возраст:",
+        region_label: "Регион:",
+        status: "Статус:",
+        interests: "Интересы:",
+        points: "Баллы:",
+        kids_mode: "Включить детский режим",
+        toggle_theme: "Переключить тему",
+        portfolio: "Портфолио",
+        portfolio_item1: "Диплом: Всероссийская олимпиада по экономике (1 место)",
+        portfolio_item2: "Навык: Аналитика данных → Data Scientist",
+        portfolio_item3: "Достижение: Участие в форуме 'Лидеры России'",
+        share_portfolio: "Поделиться портфолио",
+        export_pdf: "Экспорт в PDF",
+        search_company: "Ищу стажеров с навыками аналитики...",
+        finance: "Финансы",
+        experience_1year: "1 год опыта",
+        recommended_candidates: "Рекомендуемые кандидаты",
+        candidate1_name: "Алексей Иванов",
+        candidate1_skills: "Навыки: Аналитика, Python",
+        candidate2_name: "Мария Петрова",
+        candidate2_skills: "Навыки: Финансы, Excel",
+        candidate_portfolio: "Портфолио кандидата",
+        experience: "Опыт:",
+        candidate_reviews: "Отзывы о кандидате",
+        send_offer: "Отправить оффер",
+        start_chat: "Начать чат",
+        your_chats: "Ваши чаты",
+        candidate1_message: "Спасибо за оффер! Готов обсудить детали.",
+        candidate2_message: "Интересует стажировка. Какие условия?",
+        student_ranking: "Рейтинг студентов",
+        top_students: "Топ-студенты",
+        candidate1_ranking: "Баллы: 150 | Навыки: Аналитика, Python",
+        candidate2_ranking: "Баллы: 120 | Навыки: Финансы, Excel",
+        analytics: "Аналитика",
+        candidate_stats: "Статистика кандидатов",
+        candidates_viewed: "Просмотрено кандидатов:",
+        offers_sent: "Отправлено офферов:",
+        offers_accepted: "Принято офферов:",
+        skill_trends: "Тренды навыков",
+        top_skill: "Популярный навык:",
+        company_profile: "Личный кабинет",
+        company_details: "Профиль компании",
+        vasilisa_welcome: "Привет! Я Василиса, помогу тебе!",
+        no_recommendations: "Нет рекомендаций"
+    },
+    en: {
+        welcome: "Welcome to vsekonkursy.RF",
+        student: "I am a student",
+        company: "I am a company",
+        name: "Your name",
+        age: "Your age",
+        region: "Your region",
+        reset: "Reset data",
+        app_title: "vsekonkursy.RF",
+        search_student: "Looking for economics contests...",
+        economy: "Economics",
+        school: "School students",
+        students: "University students",
+        analytics: "Analytics",
+        upcoming: "Upcoming",
+        easy: "Easy",
+        medium: "Medium",
+        hard: "Hard",
+        sort_default: "Default sorting",
+        sort_date: "By date",
+        sort_rating: "By rating",
+        sort_popularity: "By popularity",
+        ai_recommendations: "AI Recommendations for you",
+        recommended: "Recommendations for you",
+        all_events: "All events",
+        event1_title: "All-Russian Economics Olympiad for School Students",
+        event1_details: "Economics | 05/10/2025 | Torzhok",
+        event2_title: "Financial Initiative for Students",
+        event2_details: "Economics | 05/15/2025 | Moscow",
+        difficulty_easy: "Level: Easy",
+        difficulty_medium: "Level: Medium",
+        difficulty_hard: "Level: Hard",
+        average_rating: "Average rating: ",
+        event_map: "Events Map",
+        contest_details: "Contest Details",
+        format: "Format:",
+        audience: "Audience:",
+        skills: "Skills:",
+        date: "Date:",
+        difficulty: "Difficulty Level:",
+        description: "Description:",
+        contest_description: "This is a prestigious contest for young economists where you can showcase your analytical skills.",
+        register: "Register",
+        share: "Share",
+        export_to_calendar: "Export to Calendar",
+        push_notifications: "Enable reminders",
+        rate_event: "Rate the event",
+        submit_rating: "Submit rating",
+        reviews: "Reviews",
+        leave_review: "Leave a review",
+        review: "Your review...",
+        submit_review: "Submit review",
+        calendar: "Calendar",
+        upcoming_events: "Upcoming Events",
+        achievements: "Achievements",
+        your_level: "Your level: ",
+        level_progress: "0 / 100 points to the next level",
+        weekly_challenges: "Weekly Challenges",
+        your_awards: "Your Awards",
+        newbie: "Newbie",
+        newbie_desc: "Registered on the platform",
+        active_participant: "Active Participant",
+        active_participant_desc: "Participated in 5 events",
+        champion: "Champion",
+        champion_desc: "Win 3 contests",
+        daily_tasks: "Daily Tasks",
+        notifications: "Notifications",
+        your_notifications: "Your Notifications",
+        chat: "Chat",
+        messages: "Messages",
+        message: "Write a message...",
+        send: "Send",
+        stats: "Statistics",
+        your_activity: "Your Activity",
+        events_month: "Events this month:",
+        reviews_written: "Reviews written:",
+        points_earned: "Points earned:",
+        messages_sent: "Messages sent:",
+        friends: "Friends",
+        your_friends: "Your Friends",
+        search_friends: "Search friends...",
+        friend_requests: "Friend Requests",
+        groups: "Groups",
+        your_groups: "Your Groups",
+        create_group: "Create Group",
+        group_chat: "Group Chat",
+        offline_mode: "Offline Mode",
+        saved_events: "Saved Events",
+        profile: "Profile",
+        profile_details: "Profile Details",
+        name_label: "Name:",
+        age_label: "Age:",
+        region_label: "Region:",
+        status: "Status:",
+        interests: "Interests:",
+        points: "Points:",
+        kids_mode: "Enable Kids Mode",
+        toggle_theme: "Toggle Theme",
+        portfolio: "Portfolio",
+        portfolio_item1: "Diploma: All-Russian Economics Olympiad (1st place)",
+        portfolio_item2: "Skill: Data Analytics → Data Scientist",
+        portfolio_item3: "Achievement: Participation in the 'Leaders of Russia' forum",
+        share_portfolio: "Share Portfolio",
+        export_pdf: "Export to PDF",
+        search_company: "Looking for interns with analytics skills...",
+        finance: "Finance",
+        experience_1year: "1 year of experience",
+        recommended_candidates: "Recommended Candidates",
+        candidate1_name: "Alexey Ivanov",
+        candidate1_skills: "Skills: Analytics, Python",
+        candidate2_name: "Maria Petrova",
+        candidate2_skills: "Skills: Finance, Excel",
+        candidate_portfolio: "Candidate Portfolio",
+        experience: "Experience:",
+        candidate_reviews: "Reviews about the candidate",
+        send_offer: "Send Offer",
+        start_chat: "Start Chat",
+        your_chats: "Your Chats",
+        candidate1_message: "Thanks for the offer! Ready to discuss details.",
+        candidate2_message: "Interested in the internship. What are the conditions?",
+        student_ranking: "Student Ranking",
+        top_students: "Top Students",
+        candidate1_ranking: "Points: 150 | Skills: Analytics, Python",
+        candidate2_ranking: "Points: 120 | Skills: Finance, Excel",
+        analytics: "Analytics",
+        candidate_stats: "Candidate Statistics",
+        candidates_viewed: "Candidates viewed:",
+        offers_sent: "Offers sent:",
+        offers_accepted: "Offers accepted:",
+        skill_trends: "Skill Trends",
+        top_skill: "Top skill:",
+        company_profile: "Company Profile",
+        company_details: "Company Details",
+        vasilisa_welcome: "Hello! I am Vasilisa, here to help you!",
+        no_recommendations: "No recommendations"
+    }
+};
+
+// Функция переключения языка
+function switchLanguage() {
+    const lang = document.getElementById("language-select").value || "ru";
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-lang]").forEach(element => {
+        const key = element.getAttribute("data-lang");
+        element.textContent = translations[lang][key] || element.textContent;
+    });
+    document.querySelectorAll("[data-lang-placeholder]").forEach(element => {
+        const key = element.getAttribute("data-lang-placeholder");
+        element.placeholder = translations[lang][key] || element.placeholder;
+    });
+    loadUserData(); // Перезагрузка данных для обновления интерфейса
+}
+
+// Функция переключения темы
+function toggleTheme() {
+    const phoneScreen = document.querySelector(".phone-screen");
+    phoneScreen.classList.toggle("dark-theme");
+}
+
+// Функция для Василисы
+function toggleVasilisa() {
+    const vasilisa = document.querySelector(".vasilisa-container");
+    vasilisa.classList.toggle("expanded");
+}
+
+// Функция для загрузки данных пользователя
+function loadUserData() {
+    const userData = JSON.parse(localStorage.getItem("userData")) || {};
+    const studentNav = document.getElementById("student-nav");
+    const companyNav = document.getElementById("company-nav");
+
+    // Скрываем обе панели перед отображением нужной
+    studentNav.style.display = "none";
+    companyNav.style.display = "none";
+
+    if (userData.role) {
+        if (userData.role === "student") {
+            switchScreen("student-home-screen");
+            document.getElementById("student-name").textContent = userData.name || "Не указано";
+            document.getElementById("student-age").textContent = userData.age || "Не указано";
+            document.getElementById("student-region").textContent = userData.region || "Не указано";
+            document.getElementById("student-status").textContent = userData.status || "Школьник";
+            document.getElementById("student-points").textContent = studentPoints || 0;
+            document.getElementById("student-location").textContent = userData.region || "Торжок, РФ";
+            studentNav.style.display = "flex"; // Показываем панель школьника
+        } else if (userData.role === "company") {
+            switchScreen("company-home-screen");
+            document.getElementById("company-name").textContent = userData.name || "Не указано";
+            document.getElementById("company-region").textContent = userData.region || "Москва, РФ";
+            document.getElementById("company-status").textContent = userData.status || "Компания";
+            companyNav.style.display = "flex"; // Показываем панель компании
+            loadCompanyData(); // Загружаем данные компании
+        }
+    }
+}

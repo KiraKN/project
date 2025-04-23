@@ -1,0 +1,900 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.phone-frame {
+    width: 360px;
+    height: 740px;
+    background: #000;
+    border-radius: 40px;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.phone-screen {
+    width: 100%;
+    height: calc(100% - 60px);
+    background: #FFFFFF;
+    border-radius: 20px;
+    overflow-y: auto;
+    position: relative;
+    padding-bottom: 60px;
+}
+
+/* Тёмная тема */
+.phone-screen.dark-theme {
+    background: #1F2937;
+    color: #FFFFFF;
+}
+
+.dark-theme .header {
+    background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+}
+
+.dark-theme .search-bar {
+    background: #374151;
+    color: #D1D5DB;
+}
+
+.dark-theme .filter-chip {
+    background: #4B5563;
+    color: #D1D5DB;
+}
+
+.dark-theme .filter-chip.active {
+    background: #60A5FA;
+    color: #FFFFFF;
+}
+
+.dark-theme .section-title {
+    color: #D1D5DB;
+}
+
+.dark-theme .event-card,
+.dark-theme .candidate-card,
+.dark-theme .achievement-item,
+.dark-theme .message-item,
+.dark-theme .ranking-item,
+.dark-theme .review-item,
+.dark-theme .task-item,
+.dark-theme .challenge-item,
+.dark-theme .friend-item,
+.dark-theme .group-item {
+    background: #374151;
+    color: #D1D5DB;
+}
+
+.dark-theme .event-card .info h3,
+.dark-theme .candidate-card .info h3,
+.dark-theme .achievement-info h3,
+.dark-theme .message-item h3,
+.dark-theme .ranking-item .info h3,
+.dark-theme .review-item h3,
+.dark-theme .task-item h3,
+.dark-theme .challenge-item h3,
+.dark-theme .friend-item h3,
+.dark-theme .group-item h3 {
+    color: #FFFFFF;
+}
+
+.dark-theme .event-card .info p,
+.dark-theme .candidate-card .info p,
+.dark-theme .achievement-info p,
+.dark-theme .message-item p,
+.dark-theme .ranking-item .info p,
+.dark-theme .review-item p,
+.dark-theme .task-item p,
+.dark-theme .challenge-item p,
+.dark-theme .friend-item p,
+.dark-theme .group-item p,
+.dark-theme .stats-section p,
+.dark-theme .analytics-section p {
+    color: #D1D5DB;
+}
+
+.dark-theme .bottom-nav {
+    background: #1F2937;
+    border-top: 1px solid #4B5563;
+}
+
+.dark-theme .bottom-nav span {
+    color: #D1D5DB;
+}
+
+.dark-theme .bottom-nav span.active {
+    color: #60A5FA;
+}
+
+.dark-theme .auth-container {
+    background: linear-gradient(135deg, #374151 0%, #4B5563 100%);
+    color: #D1D5DB;
+}
+
+.dark-theme .profile-section p,
+.dark-theme .portfolio-section p,
+.dark-theme .contest-details p,
+.dark-theme .calendar-section p,
+.dark-theme .achievements-section p,
+.dark-theme .messages-section p,
+.dark-theme .notifications-section p,
+.dark-theme .chat-section p,
+.dark-theme .ranking-section p,
+.dark-theme .reviews-section p,
+.dark-theme .daily-tasks-section p,
+.dark-theme .map-section p,
+.dark-theme .stats-section p,
+.dark-theme .friends-section p,
+.dark-theme .groups-section p,
+.dark-theme .group-chat-section p,
+.dark-theme .analytics-section p,
+.dark-theme .offline-section p {
+    color: #D1D5DB;
+}
+
+.dark-theme .chat-messages .message {
+    background: #4B5563;
+    color: #D1D5DB;
+}
+
+.dark-theme .chat-messages .message.sent {
+    background: #60A5FA;
+    color: #FFFFFF;
+}
+
+.dark-theme .progress-bar {
+    background: #4B5563;
+}
+
+.dark-theme .progress-bar .progress {
+    background: #60A5FA;
+}
+
+.status-bar {
+    background: #000;
+    color: #FFF;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.status-bar .time {
+    font-weight: 500;
+}
+
+.status-bar .icons img {
+    width: 16px;
+    margin-left: 8px;
+}
+
+.screen {
+    display: none;
+    min-height: 100%;
+}
+
+.screen.active {
+    display: block;
+}
+
+.header {
+    padding: 16px;
+    background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+    color: #FFFFFF;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header h1 {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.header .back-button {
+    position: absolute;
+    left: 16px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.header .location {
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.header .location::before {
+    content: '📍';
+    margin-right: 4px;
+}
+
+.search-bar {
+    margin: 16px;
+    padding: 12px;
+    background: #F3F4F6;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #6B7280;
+}
+
+.search-bar input {
+    border: none;
+    background: none;
+    flex: 1;
+    font-size: 14px;
+    outline: none;
+}
+
+.search-bar::before {
+    content: '🔍';
+    margin-right: 8px;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 16px;
+    margin-bottom: 16px;
+}
+
+.filter-chip {
+    padding: 6px 12px;
+    background: #E5E7EB;
+    border-radius: 16px;
+    font-size: 12px;
+    color: #4B5563;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-chip.active {
+    background: #3B82F6;
+    color: #FFFFFF;
+}
+
+.sort-options {
+    padding: 0 16px;
+    margin-bottom: 16px;
+}
+
+.sort-options select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    font-size: 14px;
+    color: #4B5563;
+}
+
+.language-switcher {
+    padding: 0 16px;
+    margin-bottom: 16px;
+}
+
+.language-switcher select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    font-size: 14px;
+    color: #4B5563;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1F2937;
+    padding: 16px;
+    margin: 0;
+}
+
+.event-card, .candidate-card {
+    margin: 0 16px 16px;
+    padding: 12px;
+    background: #F9FAFB;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.event-card:hover, .candidate-card:hover {
+    transform: scale(1.02);
+}
+
+.event-card img, .candidate-card img {
+    width: 48px;
+    height: 48px;
+    margin-right: 12px;
+    border-radius: 8px;
+}
+
+.event-card .info, .candidate-card .info {
+    flex: 1;
+}
+
+.event-card .info h3, .candidate-card .info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 4px;
+}
+
+.event-card .info p, .candidate-card .info p {
+    font-size: 12px;
+    color: #6B7280;
+    margin: 0;
+}
+
+.event-card .rating {
+    font-size: 12px;
+    color: #F59E0B;
+    display: flex;
+    align-items: center;
+}
+
+.event-card .rating::before {
+    content: '★';
+    margin-right: 4px;
+}
+
+.event-card .like {
+    color: #EF4444;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.event-average-rating {
+    font-size: 12px;
+    color: #F59E0B;
+}
+
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: linear-gradient(135deg, #E8F0FE 0%, #D6E4FF 100%);
+    color: #1F2937;
+    text-align: center;
+    padding: 16px;
+}
+
+.auth-container h1 {
+    font-size: 24px;
+    margin-bottom: 24px;
+}
+
+.auth-container .role-buttons {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.auth-container .role-buttons .button {
+    background: #10B981;
+    padding: 12px 24px;
+    border-radius: 12px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.auth-container .role-buttons .button:hover {
+    background: #059669;
+    transform: scale(1.05);
+}
+
+.auth-container .form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.auth-container .form input {
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-container .reset-button {
+    background: #EF4444;
+    margin-top: 16px;
+}
+
+.auth-container .reset-button:hover {
+    background: #DC2626;
+}
+
+.vasilisa-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    transition: all 0.5s ease;
+}
+
+.vasilisa-container.expanded {
+    bottom: 100px;
+}
+
+.vasilisa-container img {
+    width: 80px;
+    height: auto;
+    cursor: pointer;
+    animation: bounce 2s infinite;
+    transition: all 0.3s ease;
+}
+
+.vasilisa-container.expanded img {
+    width: 120px;
+}
+
+.vasilisa-container .message {
+    display: none;
+    background: #3B82F6;
+    color: #FFFFFF;
+    padding: 8px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    max-width: 200px;
+    margin-left: 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.vasilisa-container.expanded .message {
+    display: block;
+    opacity: 1;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 20px;
+    width: 320px;
+    background: #FFFFFF;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid #E5E7EB;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    z-index: 15;
+    flex-wrap: wrap;
+}
+
+.bottom-nav span {
+    font-size: 24px;
+    color: #6B7280;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 4px;
+}
+
+.bottom-nav span.active {
+    color: #3B82F6;
+}
+
+.bottom-nav span:hover {
+    transform: scale(1.1);
+}
+
+.profile-section, .portfolio-section, .contest-details, .calendar-section, .achievements-section, .messages-section, .notifications-section, .chat-section, .ranking-section, .reviews-section, .daily-tasks-section, .map-section, .stats-section, .friends-section, .groups-section, .group-chat-section, .analytics-section, .offline-section {
+    padding: 16px;
+}
+
+.profile-section h2, .portfolio-section h2, .contest-details h2, .calendar-section h2, .achievements-section h2, .messages-section h2, .notifications-section h2, .chat-section h2, .ranking-section h2, .reviews-section h2, .daily-tasks-section h2, .map-section h2, .stats-section h2, .friends-section h2, .groups-section h2, .group-chat-section h2, .analytics-section h2, .offline-section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.profile-section p, .portfolio-section p, .contest-details p, .calendar-section p, .achievements-section p, .messages-section p, .notifications-section p, .chat-section p, .ranking-section p, .reviews-section p, .daily-tasks-section p, .map-section p, .stats-section p, .friends-section p, .groups-section p, .group-chat-section p, .analytics-section p, .offline-section p {
+    font-size: 14px;
+    color: #4B5563;
+    margin: 8px 0;
+}
+
+.portfolio-section ul, .calendar-section ul, .notifications-section ul, .daily-tasks-section ul, .weekly-challenges-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.portfolio-section ul li, .calendar-section ul li, .notifications-section ul li, .daily-tasks-section ul li, .weekly-challenges-section ul li {
+    font-size: 14px;
+    color: #4B5563;
+    margin: 8px 0;
+    position: relative;
+    padding-left: 24px;
+}
+
+.portfolio-section ul li::before, .calendar-section ul li::before {
+    content: '🏆';
+    position: absolute;
+    left: 0;
+    font-size: 16px;
+}
+
+.calendar-section ul li::before {
+    content: '📅';
+}
+
+.notifications-section ul li::before {
+    content: '🔔';
+    position: absolute;
+    left: 0;
+    font-size: 16px;
+}
+
+.daily-tasks-section ul li::before {
+    content: '✅';
+    position: absolute;
+    left: 0;
+    font-size: 16px;
+}
+
+.daily-tasks-section ul li.completed::before {
+    content: '✔️';
+}
+
+.weekly-challenges-section ul li::before {
+    content: '🎯';
+    position: absolute;
+    left: 0;
+    font-size: 16px;
+}
+
+.weekly-challenges-section ul li.completed::before {
+    content: '✔️';
+}
+
+.button {
+    display: inline-block;
+    padding: 8px 16px;
+    background: #3B82F6;
+    color: #FFFFFF;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    margin: 8px 0;
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    background: #2563EB;
+    transform: scale(1.05);
+}
+
+.button.small {
+    padding: 6px 12px;
+    font-size: 12px;
+}
+
+.kids-mode .event-card {
+    background: #FFF7ED;
+    border: 2px solid #F59E0B;
+}
+
+.kids-mode .event-card .info h3 {
+    color: #F59E0B;
+}
+
+.kids-mode .section-title {
+    color: #F59E0B;
+}
+
+.kids-mode .bottom-nav {
+    background: #FFF7ED;
+}
+
+.kids-mode .vasilisa-container .message {
+    background: #F59E0B;
+}
+
+.achievement-item, .challenge-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #F9FAFB;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.achievement-item.locked, .challenge-item.locked {
+    opacity: 0.5;
+}
+
+.achievement-icon {
+    font-size: 24px;
+    margin-right: 12px;
+}
+
+.achievement-info h3, .challenge-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 4px;
+}
+
+.achievement-info p, .challenge-info p {
+    font-size: 12px;
+    color: #6B7280;
+    margin: 0;
+}
+
+.message-item {
+    padding: 12px;
+    background: #F9FAFB;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.message-item h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 4px;
+}
+
+.message-item p {
+    font-size: 12px;
+    color: #6B7280;
+    margin: 0 0 8px;
+}
+
+.chat-section .chat-messages, .group-chat-section .chat-messages {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 16px;
+}
+
+.chat-section .chat-messages .message, .group-chat-section .chat-messages .message {
+    padding: 8px 12px;
+    background: #F3F4F6;
+    border-radius: 12px;
+    margin: 8px 0;
+    font-size: 14px;
+    color: #1F2937;
+}
+
+.chat-section .chat-messages .message.sent, .group-chat-section .chat-messages .message.sent {
+    background: #3B82F6;
+    color: #FFFFFF;
+    margin-left: auto;
+    text-align: right;
+}
+
+.chat-section .chat-input, .group-chat-section .chat-input {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.chat-section .chat-input input, .group-chat-section .chat-input input {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #F9FAFB;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.ranking-item .ranking-position {
+    font-size: 16px;
+    font-weight: 700;
+    color: #F59E0B;
+    margin-right: 12px;
+}
+
+.ranking-item .info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 4px;
+}
+
+.ranking-item .info p {
+    font-size: 12px;
+    color: #6B7280;
+    margin: 0;
+}
+
+.review-form, .rating-form {
+    margin-top: 16px;
+}
+
+.review-form textarea {
+    width: 100%;
+    height: 80px;
+    padding: 8px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.review-form select, .rating-form select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.review-item {
+    padding: 12px;
+    background: #F9FAFB;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.review-item .rating {
+    font-size: 12px;
+    color: #F59E0B;
+    display: flex;
+    align-items: center;
+}
+
+.review-item .rating::before {
+    content: '★';
+    margin-right: 4px;
+}
+
+.task-item, .challenge-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #F9FAFB;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.task-item.completed, .challenge-item.completed {
+    opacity: 0.5;
+}
+
+.task-item .task-info h3, .challenge-item .challenge-info h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 4px;
+}
+
+.task-item .task-info p, .challenge-item .challenge-info p {
+    font-size: 12px;
+    color: #6B7280;
+    margin: 0;
+}
+
+.level-progress {
+    margin-bottom: 16px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #E5E7EB;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-bar .progress {
+    height: 100%;
+    background: #3B82F6;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+#level-progress-text {
+    font-size: 12px;
+    color: #6B7280;
+    margin-top: 4px;
+    text-align: center;
+}
+
+.notification-toggle {
+    margin: 16px 0;
+}
+
+.notification-toggle label {
+    font-size: 14px;
+    color: #4B5563;
+}
+
+.friend-item, .group-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #F9FAFB;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.friend-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.friend-item .info h3, .group-item h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 4px;
+}
+
+.friend-item .info p, .group-item p {
+    font-size: 12px;
+    color: #6B7280;
+    margin: 0;
+}
+
+.friend-item .button, .group-item .button {
+    margin-left: auto;
+}
