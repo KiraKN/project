@@ -80,7 +80,7 @@
                      data-format="Экономика" data-audience="Школьники" data-skills="Аналитика"
                      data-date="2025-05-10" data-difficulty="Средний" data-rating="5.0" data-popularity="100"
                      data-lat="57.0436" data-lon="34.9667">
-                    <img src="https://images.unsplash.com/photo-1516321318423-9c5fded4d3a5?q=80&w=1470&auto=format&fit=crop" alt="Event 1">
+                    <img src="https://via.placeholder.com/60x60.png?text=Event+1" alt="Event 1">
                     <div class="info">
                         <h3 data-lang="event1_title">Всероссийский экономический олимп школьников</h3>
                         <p data-lang="event1_details">Экономика | 10.05.2025 | Торжок</p>
@@ -88,7 +88,7 @@
                         <p class="event-audience" data-lang="audience">Аудитория: <span>Школьники</span></p>
                         <p class="event-skills" data-lang="skills">Навыки: <span>Аналитика</span></p>
                         <p class="event-difficulty" data-lang="difficulty">Уровень сложности: <span>Средний</span></p>
-                        <div class="event-average-rating"><span data-lang="average_rating">Средний рейтинг: </span><span class="rating">5.0</span></div>
+                        <div class="event-average-rating"><span data-lang="average_rating">Средний рейтинг: </span><span class="rating">5.0</span>⭐</div>
                     </div>
                     <span class="like-button" onclick="studentToggleLike(this, event)">❤️</span>
                 </div>
@@ -96,7 +96,7 @@
                      data-format="Экономика" data-audience="Студенты" data-skills="Финансы"
                      data-date="2025-05-15" data-difficulty="Сложный" data-rating="4.8" data-popularity="80"
                      data-lat="55.7558" data-lon="37.6173">
-                    <img src="https://images.unsplash.com/photo-1554224154-26062573d3e1?q=80&w=1470&auto=format&fit=crop" alt="Event 2">
+                    <img src="https://via.placeholder.com/60x60.png?text=Event+2" alt="Event 2">
                     <div class="info">
                         <h3 data-lang="event2_title">Финансовая инициатива для студентов</h3>
                         <p data-lang="event2_details">Экономика | 15.05.2025 | Москва</p>
@@ -104,7 +104,7 @@
                         <p class="event-audience" data-lang="audience">Аудитория: <span>Студенты</span></p>
                         <p class="event-skills" data-lang="skills">Навыки: <span>Финансы</span></p>
                         <p class="event-difficulty" data-lang="difficulty">Уровень сложности: <span>Сложный</span></p>
-                        <div class="event-average-rating"><span data-lang="average_rating">Средний рейтинг: </span><span class="rating">4.8</span></div>
+                        <div class="event-average-rating"><span data-lang="average_rating">Средний рейтинг: </span><span class="rating">4.8</span>⭐</div>
                     </div>
                     <span class="like-button" onclick="studentToggleLike(this, event)">❤️</span>
                 </div>
@@ -296,7 +296,7 @@
             <div class="candidates-list">
                 <div class="candidate-card" onclick="openCandidatePortfolio('Алексей Иванов')"
                      data-skills="Аналитика, Python" data-experience="1 год опыта">
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1470&auto=format&fit=crop" alt="Candidate 1">
+                    <img src="https://via.placeholder.com/60x60.png?text=Candidate+1" alt="Candidate 1">
                     <div class="info">
                         <h3 data-lang="candidate1_name">Алексей Иванов</h3>
                         <p data-lang="candidate1_skills">Навыки: Аналитика, Python</p>
@@ -304,7 +304,7 @@
                 </div>
                 <div class="candidate-card" onclick="openCandidatePortfolio('Мария Петрова')"
                      data-skills="Финансы, Excel" data-experience="2 года опыта">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1470&auto=format&fit=crop" alt="Candidate 2">
+                    <img src="https://via.placeholder.com/60x60.png?text=Candidate+2" alt="Candidate 2">
                     <div class="info">
                         <h3 data-lang="candidate2_name">Мария Петрова</h3>
                         <p data-lang="candidate2_skills">Навыки: Финансы, Excel</p>
@@ -345,14 +345,14 @@
             <h3 data-lang="top_students">Топ-студенты</h3>
             <div class="candidates-list">
                 <div class="candidate-card">
-                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1470&auto=format&fit=crop" alt="Candidate 1">
+                    <img src="https://via.placeholder.com/60x60.png?text=Candidate+1" alt="Candidate 1">
                     <div class="info">
                         <h3 data-lang="candidate1_name">Алексей Иванов</h3>
                         <p data-lang="candidate1_ranking">Баллы: 150 | Навыки: Аналитика, Python</p>
                     </div>
                 </div>
                 <div class="candidate-card">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1470&auto=format&fit=crop" alt="Candidate 2">
+                    <img src="https://via.placeholder.com/60x60.png?text=Candidate+2" alt="Candidate 2">
                     <div class="info">
                         <h3 data-lang="candidate2_name">Мария Петрова</h3>
                         <p data-lang="candidate2_ranking">Баллы: 120 | Навыки: Финансы, Excel</p>
@@ -415,6 +415,8 @@
         document.addEventListener("DOMContentLoaded", () => {
             switchLanguage();
             loadUserData();
+            getAIRecommendations();
+            getRecommendedEvents();
         });
     </script>
 </body>
