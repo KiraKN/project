@@ -3,421 +3,564 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>всеконкурсы.РФ</title>
+    <title>всеконкурсы.РФ - Мобильное приложение</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Подключаем Leaflet для карты -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
-<body>
-    <div class="phone-screen">
-        <div class="status-bar">
-            <span>12:34</span>
-            <span>🔋 100%</span>
-        </div>
-        <header>
-            <h1 data-lang="app_title">всеконкурсы.РФ</h1>
-            <select id="language-select" onchange="switchLanguage()">
-                <option value="ru">Русский</option>
-                <option value="en">English</option>
-            </select>
-        </header>
-
-        <div class="vasilisa-container">
-            <img src="https://i.ibb.co/5G1qGqT/vasilisa.png" alt="Василиса" onclick="toggleVasilisa()">
-            <div class="vasilisa-message">
-                <p data-lang="vasilisa_welcome">Привет! Я Василиса, помогу тебе!</p>
+<body onload="loadUserData()">
+    <div class="phone-frame">
+        <div class="phone-screen">
+            <div class="status-bar">
+                <span class="time">12:34</span>
+                <span class="icons">
+                    <img src="https://img.icons8.com/material-outlined/24/ffffff/wifi.png" alt="WiFi">
+                </span>
             </div>
-        </div>
 
-        <!-- Экран авторизации -->
-        <div id="auth-screen" class="screen active">
-            <h2 data-lang="welcome">Добро пожаловать в всеконкурсы.РФ</h2>
-            <button class="role-button" onclick="register('student')"><span data-lang="student">Я школьник</span></button>
-            <button class="role-button" onclick="register('company')"><span data-lang="company">Я компания</span></button>
-            <div class="auth-form">
-                <input type="text" id="name-input" data-lang-placeholder="name" placeholder="Ваше имя">
-                <input type="number" id="age-input" data-lang-placeholder="age" placeholder="Ваш возраст">
-                <input type="text" id="region-input" data-lang-placeholder="region" placeholder="Ваш регион">
-            </div>
-        </div>
-
-        <!-- Экран школьника -->
-        <div id="student-home-screen" class="screen">
-            <div class="profile-header">
-                <div class="profile-info">
-                    <h2 id="student-name">Имя</h2>
-                    <p id="student-status">Школьник</p>
-                    <p id="student-location">Торжок, РФ</p>
-                </div>
-            </div>
-            <input type="text" id="student-search-input" data-lang-placeholder="search_student" placeholder="Ищу конкурсы по экономике..." oninput="studentSearchEvents()">
-            <div class="filters">
-                <span class="filter-chip" onclick="studentFilterEvents('format', 'Экономика')" data-lang="economy">Экономика</span>
-                <span class="filter-chip" onclick="studentFilterEvents('audience', 'Школьники')" data-lang="school">Школьники</span>
-                <span class="filter-chip" onclick="studentFilterEvents('audience', 'Студенты')" data-lang="students">Студенты</span>
-                <span class="filter-chip" onclick="studentFilterEvents('skills', 'Аналитика')" data-lang="analytics">Аналитика</span>
-                <span class="filter-chip" onclick="studentFilterEvents('date', 'Ближайшие')" data-lang="upcoming">Ближайшие</span>
-                <span class="filter-chip" onclick="studentFilterEvents('difficulty', 'Лёгкий')" data-lang="easy">Лёгкий</span>
-                <span class="filter-chip" onclick="studentFilterEvents('difficulty', 'Средний')" data-lang="medium">Средний</span>
-                <span class="filter-chip" onclick="studentFilterEvents('difficulty', 'Сложный')" data-lang="hard">Сложный</span>
-            </div>
-            <select id="sort-events" onchange="studentSortEvents()">
-                <option value="default" data-lang="sort_default">Сортировка по умолчанию</option>
-                <option value="date" data-lang="sort_date">По дате</option>
-                <option value="rating" data-lang="sort_rating">По рейтингу</option>
-                <option value="popularity" data-lang="sort_popularity">По популярности</option>
-            </select>
-
-            <h3 data-lang="ai_recommendations">ИИ-Рекомендации для вас</h3>
-            <div id="ai-recommended-events" class="events-list"></div>
-
-            <h3 data-lang="recommended">Рекомендации для вас</h3>
-            <div id="recommended-events" class="events-list"></div>
-
-            <h3 data-lang="all_events">Все мероприятия</h3>
-            <div id="all-events" class="events-list">
-                <div class="event-card" onclick="openContest('Всероссийский экономический олимп школьников')"
-                     data-format="Экономика" data-audience="Школьники" data-skills="Аналитика"
-                     data-date="2025-05-10" data-difficulty="Средний" data-rating="5.0" data-popularity="100"
-                     data-lat="57.0436" data-lon="34.9667">
-                    <img src="https://via.placeholder.com/60x60.png?text=Event+1" alt="Event 1">
-                    <div class="info">
-                        <h3 data-lang="event1_title">Всероссийский экономический олимп школьников</h3>
-                        <p data-lang="event1_details">Экономика | 10.05.2025 | Торжок</p>
-                        <p class="event-description" data-lang="contest_description">Это престижный конкурс для молодых экономистов, где вы сможете продемонстрировать свои аналитические способности.</p>
-                        <p class="event-audience" data-lang="audience">Аудитория: <span>Школьники</span></p>
-                        <p class="event-skills" data-lang="skills">Навыки: <span>Аналитика</span></p>
-                        <p class="event-difficulty" data-lang="difficulty">Уровень сложности: <span>Средний</span></p>
-                        <div class="event-average-rating"><span data-lang="average_rating">Средний рейтинг: </span><span class="rating">5.0</span>⭐</div>
+            <!-- Регистрация -->
+            <div class="screen active" id="auth-screen">
+                <div class="auth-container">
+                    <h1 data-lang="welcome">Добро пожаловать в всеконкурсы.РФ</h1>
+                    <div class="language-switcher">
+                        <select id="language-select" onchange="switchLanguage()">
+                            <option value="ru">Русский</option>
+                            <option value="en">English</option>
+                        </select>
                     </div>
-                    <span class="like-button" onclick="studentToggleLike(this, event)">❤️</span>
-                </div>
-                <div class="event-card" onclick="openContest('Финансовая инициатива для студентов')"
-                     data-format="Экономика" data-audience="Студенты" data-skills="Финансы"
-                     data-date="2025-05-15" data-difficulty="Сложный" data-rating="4.8" data-popularity="80"
-                     data-lat="55.7558" data-lon="37.6173">
-                    <img src="https://via.placeholder.com/60x60.png?text=Event+2" alt="Event 2">
-                    <div class="info">
-                        <h3 data-lang="event2_title">Финансовая инициатива для студентов</h3>
-                        <p data-lang="event2_details">Экономика | 15.05.2025 | Москва</p>
-                        <p class="event-description">Конкурс для студентов, направленный на развитие финансовых навыков и аналитического мышления.</p>
-                        <p class="event-audience" data-lang="audience">Аудитория: <span>Студенты</span></p>
-                        <p class="event-skills" data-lang="skills">Навыки: <span>Финансы</span></p>
-                        <p class="event-difficulty" data-lang="difficulty">Уровень сложности: <span>Сложный</span></p>
-                        <div class="event-average-rating"><span data-lang="average_rating">Средний рейтинг: </span><span class="rating">4.8</span>⭐</div>
+                    <div class="role-buttons">
+                        <div class="button" onclick="register('student')" data-lang="student">Я школьник</div>
+                        <div class="button" onclick="register('company')" data-lang="company">Я компания</div>
                     </div>
-                    <span class="like-button" onclick="studentToggleLike(this, event)">❤️</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Экран карты мероприятий -->
-        <div id="student-map-screen" class="screen">
-            <h2 data-lang="event_map">Карта мероприятий</h2>
-            <div id="events-map" style="height: 400px;"></div>
-        </div>
-
-        <!-- Экран деталей конкурса -->
-        <div id="contest-details-screen" class="screen">
-            <h2 id="contest-title">Название конкурса</h2>
-            <p id="contest-format" data-lang="format">Формат: Экономика</p>
-            <p id="contest-audience" data-lang="audience">Аудитория: Школьники</p>
-            <p id="contest-skills" data-lang="skills">Навыки: Аналитика</p>
-            <p id="contest-date" data-lang="date">Дата: 10.05.2025</p>
-            <p id="contest-difficulty" data-lang="difficulty">Уровень сложности: Средний</p>
-            <p id="contest-description" data-lang="description">Описание: <span data-lang="contest_description">Это престижный конкурс для молодых экономистов, где вы сможете продемонстрировать свои аналитические способности.</span></p>
-            <button onclick="studentRegisterForContest()" data-lang="register">Зарегистрироваться</button>
-            <button onclick="studentShareContest()" data-lang="share">Поделиться</button>
-            <button onclick="studentExportToCalendar()" data-lang="export_to_calendar">Экспорт в календарь</button>
-            <label><input type="checkbox" id="push-notifications" onchange="studentTogglePushNotifications()"> <span data-lang="push_notifications">Включить напоминания</span></label>
-            <h3 data-lang="rate_event">Оценить мероприятие</h3>
-            <select id="event-rating">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <button onclick="studentRateEvent()" data-lang="submit_rating">Оценить</button>
-            <h3 data-lang="reviews">Отзывы</h3>
-            <div id="contest-reviews"></div>
-            <h3 data-lang="leave_review">Оставить отзыв</h3>
-            <textarea id="review-text" data-lang-placeholder="review" placeholder="Ваш отзыв..."></textarea>
-            <select id="review-rating">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-            <button onclick="studentSubmitReview()" data-lang="submit_review">Отправить отзыв</button>
-        </div>
-
-        <!-- Экран календаря -->
-        <div id="student-calendar-screen" class="screen">
-            <h2 data-lang="calendar">Календарь</h2>
-            <h3 data-lang="upcoming_events">Предстоящие мероприятия</h3>
-            <ul id="calendar-events"></ul>
-        </div>
-
-        <!-- Экран достижений -->
-        <div id="student-achievements-screen" class="screen">
-            <h2 data-lang="achievements">Достижения</h2>
-            <p data-lang="your_level">Ваш уровень: <span id="student-level">Новичок</span></p>
-            <div id="level-progress-bar" class="progress-bar"><div class="progress" style="width: 0%"></div></div>
-            <p id="level-progress-text" data-lang="level_progress">0 / 100 баллов до следующего уровня</p>
-            <h3 data-lang="weekly_challenges">Еженедельные челленджи</h3>
-            <ul id="weekly-challenges"></ul>
-            <h3 data-lang="your_awards">Ваши награды</h3>
-            <ul id="awards-list">
-                <li class="award-item">
-                    <h3 data-lang="newbie">Новичок</h3>
-                    <p data-lang="newbie_desc">Зарегистрировались на платформе</p>
-                </li>
-                <li class="award-item">
-                    <h3 data-lang="active_participant">Активный участник</h3>
-                    <p data-lang="active_participant_desc">Участвовали в 5 мероприятиях</p>
-                </li>
-                <li class="award-item">
-                    <h3 data-lang="champion">Чемпион</h3>
-                    <p data-lang="champion_desc">Победите в 3 конкурсах</p>
-                </li>
-            </ul>
-            <h3 data-lang="daily_tasks">Ежедневные задания</h3>
-            <ul>
-                <li>Участвовать в мероприятии</li>
-                <li>Оставить отзыв</li>
-                <li>Поделиться конкурсом</li>
-            </ul>
-        </div>
-
-        <!-- Экран уведомлений -->
-        <div id="student-notifications-screen" class="screen">
-            <h2 data-lang="notifications">Уведомления</h2>
-            <h3 data-lang="your_notifications">Ваши уведомления</h3>
-            <ul id="notifications-list"></ul>
-        </div>
-
-        <!-- Экран чата -->
-        <div id="student-chat-screen" class="screen">
-            <h2 data-lang="chat">Чат</h2>
-            <h3 data-lang="messages">Сообщения</h3>
-            <div id="student-chat-messages" class="chat-messages"></div>
-            <div class="chat-input">
-                <input type="text" id="student-chat-input" data-lang-placeholder="message" placeholder="Напишите сообщение...">
-                <button onclick="studentSendMessage()" data-lang="send">Отправить</button>
-            </div>
-        </div>
-
-        <!-- Экран статистики -->
-        <div id="student-stats-screen" class="screen">
-            <h2 data-lang="stats">Статистика</h2>
-            <h3 data-lang="your_activity">Ваша активность</h3>
-            <p data-lang="events_month">Мероприятий за месяц: <span id="stats-events">0</span></p>
-            <p data-lang="reviews_written">Отзывов оставлено: <span id="stats-reviews">0</span></p>
-            <p data-lang="points_earned">Баллов заработано: <span id="stats-points">0</span></p>
-            <p data-lang="messages_sent">Сообщений отправлено: <span id="stats-messages">0</span></p>
-        </div>
-
-        <!-- Экран друзей -->
-        <div id="student-friends-screen" class="screen">
-            <h2 data-lang="friends">Друзья</h2>
-            <input type="text" id="friend-search-input" data-lang-placeholder="search_friends" placeholder="Найти друзей..." oninput="studentSearchFriends()">
-            <h3 data-lang="your_friends">Ваши друзья</h3>
-            <div id="friends-list" class="friends-list"></div>
-            <h3 data-lang="friend_requests">Запросы в друзья</h3>
-            <div id="friend-requests" class="friends-list"></div>
-        </div>
-
-        <!-- Экран групп -->
-        <div id="student-groups-screen" class="screen">
-            <h2 data-lang="groups">Группы</h2>
-            <h3 data-lang="your_groups">Ваши группы</h3>
-            <button onclick="studentCreateGroup()" data-lang="create_group">Создать группу</button>
-            <div id="groups-list" class="groups-list"></div>
-        </div>
-
-        <!-- Экран группового чата -->
-        <div id="student-group-chat-screen" class="screen">
-            <h2 id="group-chat-title" data-lang="group_chat">Групповой чат</h2>
-            <div id="group-chat-messages" class="chat-messages"></div>
-            <div class="chat-input">
-                <input type="text" id="group-chat-input" data-lang-placeholder="message" placeholder="Напишите сообщение...">
-                <button onclick="studentSendGroupMessage()" data-lang="send">Отправить</button>
-            </div>
-        </div>
-
-        <!-- Экран оффлайн-режима -->
-        <div id="student-offline-screen" class="screen">
-            <h2 data-lang="offline_mode">Оффлайн-режим</h2>
-            <h3 data-lang="saved_events">Сохранённые мероприятия</h3>
-            <div id="offline-events" class="events-list"></div>
-        </div>
-
-        <!-- Экран профиля школьника -->
-        <div id="student-profile-screen" class="screen">
-            <h2 data-lang="profile">Личный кабинет</h2>
-            <h3 data-lang="profile_details">Профиль</h3>
-            <p data-lang="name_label">Имя: <span id="student-name">Не указано</span></p>
-            <p data-lang="age_label">Возраст: <span id="student-age">Не указано</span></p>
-            <p data-lang="region_label">Регион: <span id="student-region">Не указано</span></p>
-            <p data-lang="status">Статус: <span id="student-status">Школьник</span></p>
-            <p data-lang="interests">Интересы: Экономика, Аналитика</p>
-            <p data-lang="points">Баллы: <span id="student-points">0</span></p>
-            <label><input type="checkbox" onchange="studentToggleKidsMode()"> <span data-lang="kids_mode">Включить детский режим</span></label>
-            <button onclick="toggleTheme()" data-lang="toggle_theme">Переключить тему</button>
-            <button onclick="resetUserData()" data-lang="reset">Сбросить данные</button>
-            <h3 data-lang="portfolio">Портфолио</h3>
-            <ul id="portfolio-list">
-                <li data-lang="portfolio_item1">Диплом: Всероссийская олимпиада по экономике (1 место)</li>
-                <li data-lang="portfolio_item2">Навык: Аналитика данных → Data Scientist</li>
-                <li data-lang="portfolio_item3">Достижение: Участие в форуме 'Лидеры России'</li>
-            </ul>
-            <button onclick="studentSharePortfolio()" data-lang="share_portfolio">Поделиться портфолио</button>
-            <button onclick="alert('Экспорт в PDF скоро будет доступен!')" data-lang="export_pdf">Экспорт в PDF</button>
-        </div>
-
-        <!-- Экран компании -->
-        <div id="company-home-screen" class="screen">
-            <div class="profile-header">
-                <div class="profile-info">
-                    <h2 id="company-name">Имя компании</h2>
-                    <p id="company-status">Компания</p>
-                    <p id="company-region">Москва, РФ</p>
-                </div>
-            </div>
-            <input type="text" id="company-search-input" data-lang-placeholder="search_company" placeholder="Ищу стажеров с навыками аналитики..." oninput="companySearchCandidates()">
-            <div class="filters">
-                <span class="filter-chip" onclick="companyFilterCandidates('skills', 'Аналитика')" data-lang="analytics">Аналитика</span>
-                <span class="filter-chip" onclick="companyFilterCandidates('skills', 'Финансы')" data-lang="finance">Финансы</span>
-                <span class="filter-chip" onclick="companyFilterCandidates('experience', '1 год опыта')" data-lang="experience_1year">1 год опыта</span>
-            </div>
-            <h3 data-lang="recommended_candidates">Рекомендуемые кандидаты</h3>
-            <div class="candidates-list">
-                <div class="candidate-card" onclick="openCandidatePortfolio('Алексей Иванов')"
-                     data-skills="Аналитика, Python" data-experience="1 год опыта">
-                    <img src="https://via.placeholder.com/60x60.png?text=Candidate+1" alt="Candidate 1">
-                    <div class="info">
-                        <h3 data-lang="candidate1_name">Алексей Иванов</h3>
-                        <p data-lang="candidate1_skills">Навыки: Аналитика, Python</p>
+                    <div class="form">
+                        <input type="text" id="name-input" placeholder="Ваше имя" data-lang-placeholder="name">
+                        <input type="number" id="age-input" placeholder="Ваш возраст" data-lang-placeholder="age">
+                        <input type="text" id="region-input" placeholder="Ваш регион" data-lang-placeholder="region">
                     </div>
+                    <div class="button small reset-button" onclick="resetUserData()" data-lang="reset">Сбросить данные</div>
                 </div>
-                <div class="candidate-card" onclick="openCandidatePortfolio('Мария Петрова')"
-                     data-skills="Финансы, Excel" data-experience="2 года опыта">
-                    <img src="https://via.placeholder.com/60x60.png?text=Candidate+2" alt="Candidate 2">
-                    <div class="info">
-                        <h3 data-lang="candidate2_name">Мария Петрова</h3>
-                        <p data-lang="candidate2_skills">Навыки: Финансы, Excel</p>
+            </div>
+
+            <!-- Главная страница (Школьник) -->
+            <div class="screen" id="student-home-screen">
+                <div class="header">
+                    <h1 data-lang="app-title">всеконкурсы.РФ</h1>
+                    <span class="location" id="student-location">Торжок, РФ</span>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="student-search-input" placeholder="Ищу конкурсы по экономике..." data-lang-placeholder="search-student" oninput="studentSearchEvents()">
+                </div>
+                <div class="filters">
+                    <span class="filter-chip" onclick="studentFilterEvents('format', 'Экономика')" data-lang="economy">Экономика</span>
+                    <span class="filter-chip" onclick="studentFilterEvents('audience', 'Школьники')" data-lang="school">Школьники</span>
+                    <span class="filter-chip" onclick="studentFilterEvents('audience', 'Студенты')" data-lang="students">Студенты</span>
+                    <span class="filter-chip" onclick="studentFilterEvents('skills', 'Аналитика')" data-lang="analytics">Аналитика</span>
+                    <span class="filter-chip" onclick="studentFilterEvents('date', 'Ближайшие')" data-lang="upcoming">Ближайшие</span>
+                    <span class="filter-chip" onclick="studentFilterEvents('difficulty', 'Лёгкий')" data-lang="easy">Лёгкий</span>
+                    <span class="filter-chip" onclick="studentFilterEvents('difficulty', 'Средний')" data-lang="medium">Средний</span>
+                    <span class="filter-chip" onclick="studentFilterEvents('difficulty', 'Сложный')" data-lang="hard">Сложный</span>
+                </div>
+                <div class="sort-options">
+                    <select id="sort-events" onchange="studentSortEvents()">
+                        <option value="default" data-lang="sort-default">Сортировка по умолчанию</option>
+                        <option value="date" data-lang="sort-date">По дате</option>
+                        <option value="rating" data-lang="sort-rating">По рейтингу</option>
+                        <option value="popularity" data-lang="sort-popularity">По популярности</option>
+                    </select>
+                </div>
+                <h2 class="section-title" data-lang="ai-recommendations">ИИ-Рекомендации для вас</h2>
+                <div class="events-list" id="ai-recommended-events">
+                    <!-- Динамически заполняется через JS -->
+                </div>
+                <h2 class="section-title" data-lang="recommended">Рекомендации для вас</h2>
+                <div class="events-list" id="recommended-events">
+                    <!-- Динамически заполняется через JS -->
+                </div>
+                <h2 class="section-title" data-lang="all-events">Все мероприятия</h2>
+                <div class="events-list" id="all-events">
+                    <div class="event-card" data-format="Экономика" data-audience="Школьники" data-skills="Аналитика" data-date="2025-05-10" data-rating="5.0" data-popularity="100" data-lat="57.0413" data-lon="34.9668" data-difficulty="Средний" onclick="openContest('Всероссийский экономический олимп школьников')">
+                        <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1470" alt="ВЭО">
+                        <div class="info">
+                            <h3 data-lang="event1-title">Всероссийский экономический олимп школьников</h3>
+                            <p data-lang="event1-details">Экономика | 10.05.2025 | Торжок</p>
+                            <p data-lang="difficulty-medium">Уровень: Средний</p>
+                            <p class="event-average-rating" data-lang="average-rating">Средний рейтинг: <span>5.0</span></p>
+                        </div>
+                        <span class="rating">5.0</span>
+                        <span class="like" onclick="studentToggleLike(this, event)">♥</span>
+                    </div>
+                    <div class="event-card" data-format="Экономика" data-audience="Студенты" data-skills="Финансы" data-date="2025-05-15" data-rating="4.9" data-popularity="80" data-lat="55.7558" data-lon="37.6173" data-difficulty="Сложный" onclick="openContest('Финансовая инициатива для студентов')">
+                        <img src="https://images.pexels.com/photos/6694543/pexels-photo-6694543.jpeg?auto=compress&cs=tinysrgb&w=1470" alt="ФИИ">
+                        <div class="info">
+                            <h3 data-lang="event2-title">Финансовая инициатива для студентов</h3>
+                            <p data-lang="event2-details">Экономика | 15.05.2025 | Москва</p>
+                            <p data-lang="difficulty-hard">Уровень: Сложный</p>
+                            <p class="event-average-rating" data-lang="average-rating">Средний рейтинг: <span>4.9</span></p>
+                        </div>
+                        <span class="rating">4.9</span>
+                        <span class="like" onclick="studentToggleLike(this, event)">♥</span>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Экран портфолио кандидата -->
-        <div id="candidate-portfolio-screen" class="screen">
-            <h2 data-lang="candidate_portfolio">Портфолио кандидата</h2>
-            <p id="candidate-name">Имя кандидата</p>
-            <p id="candidate-skills" data-lang="skills">Навыки: Аналитика, Python</p>
-            <p id="candidate-experience" data-lang="experience">Опыт: 1 год опыта</p>
-            <h3 data-lang="candidate_reviews">Отзывы о кандидате</h3>
-            <div id="candidate-reviews"></div>
-            <button onclick="companySendOffer()" data-lang="send_offer">Отправить оффер</button>
-            <button onclick="companyStartChat()" data-lang="start_chat">Начать чат</button>
-        </div>
-
-        <!-- Экран чата компании -->
-        <div id="company-chat-screen" class="screen">
-            <h2 data-lang="your_chats">Ваши чаты</h2>
-            <p id="company-chat-with">Чат с кандидатом</p>
-            <div id="company-chat-messages" class="chat-messages">
-                <div class="message"><p data-lang="candidate1_message">Спасибо за оффер! Готов обсудить детали.</p></div>
-                <div class="message"><p data-lang="candidate2_message">Интересует стажировка. Какие условия?</p></div>
-            </div>
-            <div class="chat-input">
-                <input type="text" id="company-chat-input" data-lang-placeholder="message" placeholder="Напишите сообщение...">
-                <button onclick="companySendMessage()" data-lang="send">Отправить</button>
-            </div>
-        </div>
-
-        <!-- Экран рейтинга студентов -->
-        <div id="company-ranking-screen" class="screen">
-            <h2 data-lang="student_ranking">Рейтинг студентов</h2>
-            <h3 data-lang="top_students">Топ-студенты</h3>
-            <div class="candidates-list">
-                <div class="candidate-card">
-                    <img src="https://via.placeholder.com/60x60.png?text=Candidate+1" alt="Candidate 1">
-                    <div class="info">
-                        <h3 data-lang="candidate1_name">Алексей Иванов</h3>
-                        <p data-lang="candidate1_ranking">Баллы: 150 | Навыки: Аналитика, Python</p>
-                    </div>
+            <!-- Карта мероприятий (Школьник) -->
+            <div class="screen" id="student-map-screen">
+                <div class="header">
+                    <h1 data-lang="event-map">Карта мероприятий</h1>
                 </div>
-                <div class="candidate-card">
-                    <img src="https://via.placeholder.com/60x60.png?text=Candidate+2" alt="Candidate 2">
-                    <div class="info">
-                        <h3 data-lang="candidate2_name">Мария Петрова</h3>
-                        <p data-lang="candidate2_ranking">Баллы: 120 | Навыки: Финансы, Excel</p>
-                    </div>
+                <div class="map-section">
+                    <div id="events-map" style="height: 400px;"></div>
                 </div>
             </div>
+
+            <!-- Детали конкурса (Школьник) -->
+            <div class="screen" id="contest-details-screen">
+                <div class="header">
+                    <h1 data-lang="contest-details">Детали конкурса</h1>
+                    <span class="back-button" onclick="switchScreen('student-home-screen')">⬅</span>
+                </div>
+                <div class="contest-details">
+                    <h2 id="contest-title"></h2>
+                    <p><strong data-lang="format">Формат:</strong> <span id="contest-format"></span></p>
+                    <p><strong data-lang="audience">Аудитория:</strong> <span id="contest-audience"></span></p>
+                    <p><strong data-lang="skills">Навыки:</strong> <span id="contest-skills"></span></p>
+                    <p><strong data-lang="date">Дата:</strong> <span id="contest-date"></span></p>
+                    <p><strong data-lang="difficulty">Уровень сложности:</strong> <span id="contest-difficulty"></span></p>
+                    <p><strong data-lang="description">Описание:</strong> <span data-lang="contest-description">Это престижный конкурс для молодых экономистов, где вы сможете продемонстрировать свои аналитические способности.</span></p>
+                    <div class="button" id="register-contest-button" onclick="studentRegisterForContest()" data-lang="register">Зарегистрироваться</div>
+                    <div class="button small" onclick="studentShareContest()" data-lang="share">Поделиться</div>
+                    <div class="button small" onclick="studentExportToCalendar()" data-lang="export-to-calendar">Экспорт в календарь</div>
+                    <div class="notification-toggle">
+                        <label><input type="checkbox" id="push-notifications" onchange="studentTogglePushNotifications()"> <span data-lang="push-notifications">Включить напоминания</span></label>
+                    </div>
+                    <h3 data-lang="rate-event">Оценить мероприятие</h3>
+                    <div class="rating-form">
+                        <select id="event-rating">
+                            <option value="5">5 звезд</option>
+                            <option value="4">4 звезды</option>
+                            <option value="3">3 звезды</option>
+                            <option value="2">2 звезды</option>
+                            <option value="1">1 звезда</option>
+                        </select>
+                        <div class="button small" onclick="studentRateEvent()" data-lang="submit-rating">Оценить</div>
+                    </div>
+                    <h3 data-lang="reviews">Отзывы</h3>
+                    <div class="reviews-section" id="contest-reviews">
+                        <!-- Динамически заполняется через JS -->
+                    </div>
+                    <div class="review-form">
+                        <h4 data-lang="leave-review">Оставить отзыв</h4>
+                        <textarea id="review-text" placeholder="Ваш отзыв..." data-lang-placeholder="review"></textarea>
+                        <select id="review-rating">
+                            <option value="5">5 звезд</option>
+                            <option value="4">4 звезды</option>
+                            <option value="3">3 звезды</option>
+                            <option value="2">2 звезды</option>
+                            <option value="1">1 звезда</option>
+                        </select>
+                        <div class="button small" onclick="studentSubmitReview()" data-lang="submit-review">Отправить отзыв</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Календарь (Школьник) -->
+            <div class="screen" id="student-calendar-screen">
+                <div class="header">
+                    <h1 data-lang="calendar">Календарь</h1>
+                </div>
+                <div class="calendar-section">
+                    <h2 data-lang="upcoming-events">Предстоящие мероприятия</h2>
+                    <ul id="calendar-events">
+                        <!-- Динамически заполняется через JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Достижения (Школьник) -->
+            <div class="screen" id="student-achievements-screen">
+                <div class="header">
+                    <h1 data-lang="achievements">Достижения</h1>
+                </div>
+                <div class="achievements-section">
+                    <h2 data-lang="your-level">Ваш уровень: <span id="student-level">Новичок</span></h2>
+                    <div class="level-progress">
+                        <div class="progress-bar" id="level-progress-bar"></div>
+                        <p id="level-progress-text" data-lang="level-progress">0 / 100 баллов до следующего уровня</p>
+                    </div>
+                    <h2 data-lang="weekly-challenges">Еженедельные челленджи</h2>
+                    <div class="weekly-challenges-section">
+                        <ul id="weekly-challenges">
+                            <!-- Динамически заполняется через JS -->
+                        </ul>
+                    </div>
+                    <h2 data-lang="your-awards">Ваши награды</h2>
+                    <div class="achievement-item">
+                        <span class="achievement-icon">🏅</span>
+                        <div class="achievement-info">
+                            <h3 data-lang="newbie">Новичок</h3>
+                            <p data-lang="newbie-desc">Зарегистрировались на платформе</p>
+                        </div>
+                    </div>
+                    <div class="achievement-item">
+                        <span class="achievement-icon">🌟</span>
+                        <div class="achievement-info">
+                            <h3 data-lang="active-participant">Активный участник</h3>
+                            <p data-lang="active-participant-desc">Участвовали в 5 мероприятиях</p>
+                        </div>
+                    </div>
+                    <div class="achievement-item locked">
+                        <span class="achievement-icon">🔒</span>
+                        <div class="achievement-info">
+                            <h3 data-lang="champion">Чемпион</h3>
+                            <p data-lang="champion-desc">Победите в 3 конкурсах</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="daily-tasks-section">
+                    <h2 data-lang="daily-tasks">Ежедневные задания</h2>
+                    <ul id="daily-tasks">
+                        <!-- Динамически заполняется через JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Уведомления (Школьник) -->
+            <div class="screen" id="student-notifications-screen">
+                <div class="header">
+                    <h1 data-lang="notifications">Уведомления</h1>
+                </div>
+                <div class="notifications-section">
+                    <h2 data-lang="your-notifications">Ваши уведомления</h2>
+                    <ul id="notifications-list">
+                        <!-- Динамически заполняется через JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Чат (Школьник) -->
+            <div class="screen" id="student-chat-screen">
+                <div class="header">
+                    <h1 data-lang="chat">Чат</h1>
+                </div>
+                <div class="chat-section">
+                    <h2 data-lang="messages">Сообщения</h2>
+                    <div class="chat-messages" id="student-chat-messages">
+                        <!-- Динамически заполняется через JS -->
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="student-chat-input" placeholder="Напишите сообщение..." data-lang-placeholder="message">
+                        <div class="button small" onclick="studentSendMessage()" data-lang="send">Отправить</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Статистика (Школьник) -->
+            <div class="screen" id="student-stats-screen">
+                <div class="header">
+                    <h1 data-lang="stats">Статистика</h1>
+                </div>
+                <div class="stats-section">
+                    <h2 data-lang="your-activity">Ваша активность</h2>
+                    <p><strong data-lang="events-month">Мероприятий за месяц:</strong> <span id="stats-events">0</span></p>
+                    <p><strong data-lang="reviews-written">Отзывов оставлено:</strong> <span id="stats-reviews">0</span></p>
+                    <p><strong data-lang="points-earned">Баллов заработано:</strong> <span id="stats-points">0</span></p>
+                    <p><strong data-lang="messages-sent">Сообщений отправлено:</strong> <span id="stats-messages">0</span></p>
+                </div>
+            </div>
+
+            <!-- Друзья (Школьник) -->
+            <div class="screen" id="student-friends-screen">
+                <div class="header">
+                    <h1 data-lang="friends">Друзья</h1>
+                </div>
+                <div class="friends-section">
+                    <h2 data-lang="your-friends">Ваши друзья</h2>
+                    <div class="search-bar">
+                        <input type="text" id="friend-search-input" placeholder="Найти друзей..." data-lang-placeholder="search-friends" oninput="studentSearchFriends()">
+                    </div>
+                    <div class="friends-list" id="friends-list">
+                        <!-- Динамически заполняется через JS -->
+                    </div>
+                    <h2 data-lang="friend-requests">Запросы в друзья</h2>
+                    <div class="friend-requests" id="friend-requests">
+                        <!-- Динамически заполняется через JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Группы (Школьник) -->
+            <div class="screen" id="student-groups-screen">
+                <div class="header">
+                    <h1 data-lang="groups">Группы</h1>
+                </div>
+                <div class="groups-section">
+                    <h2 data-lang="your-groups">Ваши группы</h2>
+                    <div class="groups-list" id="groups-list">
+                        <!-- Динамически заполняется через JS -->
+                    </div>
+                    <div class="button" onclick="studentCreateGroup()" data-lang="create-group">Создать группу</div>
+                </div>
+            </div>
+
+            <!-- Групповой чат (Школьник) -->
+            <div class="screen" id="student-group-chat-screen">
+                <div class="header">
+                    <h1 data-lang="group-chat">Групповой чат</h1>
+                    <span class="back-button" onclick="switchScreen('student-groups-screen')">⬅</span>
+                </div>
+                <div class="group-chat-section">
+                    <h2 id="group-chat-title"></h2>
+                    <div class="chat-messages" id="group-chat-messages">
+                        <!-- Динамически заполняется через JS -->
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="group-chat-input" placeholder="Напишите сообщение..." data-lang-placeholder="message">
+                        <div class="button small" onclick="studentSendGroupMessage()" data-lang="send">Отправить</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Оффлайн-режим (Школьник) -->
+            <div class="screen" id="student-offline-screen">
+                <div class="header">
+                    <h1 data-lang="offline-mode">Оффлайн-режим</h1>
+                </div>
+                <div class="offline-section">
+                    <h2 data-lang="saved-events">Сохранённые мероприятия</h2>
+                    <div class="events-list" id="offline-events">
+                        <!-- Динамически заполняется через JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Личный кабинет (Школьник) -->
+            <div class="screen" id="student-profile-screen">
+                <div class="header">
+                    <h1 data-lang="profile">Личный кабинет</h1>
+                </div>
+                <div class="profile-section">
+                    <h2 data-lang="profile-details">Профиль</h2>
+                    <p><strong data-lang="name">Имя:</strong> <span id="student-name"></span></p>
+                    <p><strong data-lang="age">Возраст:</strong> <span id="student-age"></span></p>
+                    <p><strong data-lang="region">Регион:</strong> <span id="student-region"></span></p>
+                    <p><strong data-lang="status">Статус:</strong> <span id="student-status"></span></p>
+                    <p><strong data-lang="interests">Интересы:</strong> Экономика, Аналитика</p>
+                    <p><strong data-lang="points">Баллы:</strong> <span id="student-points">0</span></p>
+                    <div class="button" onclick="studentToggleKidsMode()" data-lang="kids-mode">Включить детский режим</div>
+                    <div class="button" onclick="toggleTheme()" data-lang="toggle-theme">Переключить тему</div>
+                    <div class="button small reset-button" onclick="resetUserData()" data-lang="reset">Выйти</div>
+                    <div class="language-switcher">
+                        <select id="profile-language-select" onchange="switchLanguage()">
+                            <option value="ru">Русский</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="portfolio-section">
+                    <h2 data-lang="portfolio">Портфолио</h2>
+                    <ul id="portfolio-list">
+                        <li data-lang="portfolio-item1">Диплом: Всероссийская олимпиада по экономике (1 место)</li>
+                        <li data-lang="portfolio-item2">Навык: Аналитика данных → Data Scientist</li>
+                        <li data-lang="portfolio-item3">Достижение: Участие в форуме "Лидеры России"</li>
+                    </ul>
+                    <div class="button" onclick="studentSharePortfolio()" data-lang="share-portfolio">Поделиться портфолио</div>
+                    <div class="button" onclick="alert('Экспорт портфолио в PDF...')" data-lang="export-pdf">Экспорт в PDF</div>
+                </div>
+            </div>
+
+            <!-- Главная страница (Компания) -->
+            <div class="screen" id="company-home-screen">
+                <div class="header">
+                    <h1 data-lang="app-title">всеконкурсы.РФ</h1>
+                    <span class="location" id="company-location">Москва, РФ</span>
+                </div>
+                <div class="search-bar">
+                    <input type="text" id="company-search-input" placeholder="Ищу стажеров с навыками аналитики..." data-lang-placeholder="search-company" oninput="companySearchCandidates()">
+                </div>
+                <div class="filters">
+                    <span class="filter-chip" onclick="companyFilterCandidates('skills', 'Аналитика')" data-lang="analytics">Аналитика</span>
+                    <span class="filter-chip" onclick="companyFilterCandidates('skills', 'Финансы')" data-lang="finance">Финансы</span>
+                    <span class="filter-chip" onclick="companyFilterCandidates('experience', '1 год')" data-lang="experience-1year">1 год опыта</span>
+                </div>
+                <h2 class="section-title" data-lang="recommended-candidates">Рекомендуемые кандидаты</h2>
+                <div class="candidates-list">
+                    <div class="candidate-card" data-skills="Аналитика" data-experience="1 год" onclick="openCandidatePortfolio('Алексей Иванов')">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1470&auto=format&fit=crop" alt="Алексей">
+                        <div class="info">
+                            <h3 data-lang="candidate1-name">Алексей Иванов</h3>
+                            <p data-lang="candidate1-skills">Навыки: Аналитика, Python</p>
+                        </div>
+                    </div>
+                    <div class="candidate-card" data-skills="Финансы" data-experience="1 год" onclick="openCandidatePortfolio('Мария Петрова')">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1470&auto=format&fit=crop" alt="Мария">
+                        <div class="info">
+                            <h3 data-lang="candidate2-name">Мария Петрова</h3>
+                            <p data-lang="candidate2-skills">Навыки: Финансы, Excel</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Портфолио кандидата (Компания) -->
+            <div class="screen" id="candidate-portfolio-screen">
+                <div class="header">
+                    <h1 data-lang="candidate-portfolio">Портфолио кандидата</h1>
+                    <span class="back-button" onclick="switchScreen('company-home-screen')">⬅</span>
+                </div>
+                <div class="portfolio-section">
+                    <h2 id="candidate-name"></h2>
+                    <p><strong data-lang="skills">Навыки:</strong> <span id="candidate-skills"></span></p>
+                    <p><strong data-lang="experience">Опыт:</strong> <span id="candidate-experience"></span></p>
+                    <ul id="candidate-portfolio">
+                        <li data-lang="portfolio-item1">Диплом: Всероссийская олимпиада по экономике (1 место)</li>
+                        <li data-lang="portfolio-item2">Навык: Аналитика данных → Data Scientist</li>
+                        <li data-lang="portfolio-item3">Достижение: Участие в форуме "Лидеры России"</li>
+                    </ul>
+                    <h3 data-lang="candidate-reviews">Отзывы о кандидате</h3>
+                    <div class="reviews-section" id="candidate-reviews">
+                        <!-- Динамически заполняется через JS -->
+                    </div>
+                    <div class="button" id="offer-button" onclick="companySendOffer()" data-lang="send-offer">Отправить оффер</div>
+                    <div class="button" onclick="companyStartChat()" data-lang="start-chat">Начать чат</div>
+                </div>
+            </div>
+
+            <!-- Сообщения (Компания) -->
+            <div class="screen" id="company-messages-screen">
+                <div class="header">
+                    <h1 data-lang="messages">Сообщения</h1>
+                </div>
+                <div class="messages-section">
+                    <h2 data-lang="your-chats">Ваши чаты</h2>
+                    <div class="message-item" onclick="companyOpenChat('Алексей Иванов')">
+                        <h3 data-lang="candidate1-name">Алексей Иванов</h3>
+                        <p data-lang="candidate1-message">Спасибо за оффер! Готов обсудить детали.</p>
+                    </div>
+                    <div class="message-item" onclick="companyOpenChat('Мария Петрова')">
+                        <h3 data-lang="candidate2-name">Мария Петрова</h3>
+                        <p data-lang="candidate2-message">Интересует стажировка. Какие условия?</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Чат (Компания) -->
+            <div class="screen" id="company-chat-screen">
+                <div class="header">
+                    <h1 data-lang="chat">Чат</h1>
+                    <span class="back-button" onclick="switchScreen('company-messages-screen')">⬅</span>
+                </div>
+                <div class="chat-section">
+                    <h2 id="company-chat-with"></h2>
+                    <div class="chat-messages" id="company-chat-messages">
+                        <!-- Динамически заполняется через JS -->
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="company-chat-input" placeholder="Напишите сообщение..." data-lang-placeholder="message">
+                        <div class="button small" onclick="companySendMessage()" data-lang="send">Отправить</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Рейтинг студентов (Компания) -->
+            <div class="screen" id="company-ranking-screen">
+                <div class="header">
+                    <h1 data-lang="student-ranking">Рейтинг студентов</h1>
+                </div>
+                <div class="ranking-section">
+                    <h2 data-lang="top-students">Топ-студенты</h2>
+                    <div class="ranking-list">
+                        <div class="ranking-item" onclick="openCandidatePortfolio('Алексей Иванов')">
+                            <span class="ranking-position">1</span>
+                            <div class="info">
+                                <h3 data-lang="candidate1-name">Алексей Иванов</h3>
+                                <p data-lang="candidate1-ranking">Баллы: 150 | Навыки: Аналитика, Python</p>
+                            </div>
+                        </div>
+                        <div class="ranking-item" onclick="openCandidatePortfolio('Мария Петрова')">
+                            <span class="ranking-position">2</span>
+                            <div class="info">
+                                <h3 data-lang="candidate2-name">Мария Петрова</h3>
+                                <p data-lang="candidate2-ranking">Баллы: 120 | Навыки: Финансы, Excel</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Аналитика (Компания) -->
+            <div class="screen" id="company-analytics-screen">
+                <div class="header">
+                    <h1 data-lang="analytics">Аналитика</h1>
+                </div>
+                <div class="analytics-section">
+                    <h2 data-lang="candidate-stats">Статистика кандидатов</h2>
+                    <p><strong data-lang="candidates-viewed">Просмотрено кандидатов:</strong> <span id="analytics-candidates-viewed">150</span></p>
+                    <p><strong data-lang="offers-sent">Отправлено офферов:</strong> <span id="analytics-offers-sent">20</span></p>
+                    <p><strong data-lang="offers-accepted">Принято офферов:</strong> <span id="analytics-offers-accepted">10</span></p>
+                    <h2 data-lang="skill-trends">Тренды навыков</h2>
+                    <p><strong data-lang="top-skill">Популярный навык:</strong> Аналитика (50% кандидатов)</p>
+                </div>
+            </div>
+
+            <!-- Личный кабинет (Компания) -->
+            <div class="screen" id="company-profile-screen">
+                <div class="header">
+                    <h1 data-lang="company-profile">Личный кабинет</h1>
+                </div>
+                <div class="profile-section">
+                    <h2 data-lang="company-details">Профиль компании</h2>
+                    <p><strong data-lang="name">Название:</strong> <span id="company-name"></span></p>
+                    <p><strong data-lang="region">Регион:</strong> <span id="company-region"></span></p>
+                    <p><strong data-lang="status">Статус:</strong> <span id="company-status"></span></p>
+                    <p><strong data-lang="interests">Интересы:</strong> Аналитика, Финансы</p>
+                    <h2 data-lang="stats">Статистика</h2>
+                    <p><strong data-lang="candidates-viewed">Всего кандидатов просмотрено:</strong> 150</p>
+                    <p><strong data-lang="offers-sent">Офферы отправлены:</strong> 20</p>
+                    <p><strong data-lang="offers-accepted">Принято офферов:</strong> 10</p>
+                    <div class="button" onclick="toggleTheme()" data-lang="toggle-theme">Переключить тему</div>
+                    <div class="button small reset-button" onclick="resetUserData()" data-lang="reset">Выйти</div>
+                    <div class="language-switcher">
+                        <select id="company-language-select" onchange="switchLanguage()">
+                            <option value="ru">Русский</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Навигация -->
+            <div class="bottom-nav" id="student-nav" style="display: none;">
+                <span class="active" onclick="switchScreen('student-home-screen')">🏠</span>
+                <span onclick="switchScreen('student-map-screen')">🗺️</span>
+                <span onclick="switchScreen('student-calendar-screen')">📅</span>
+                <span onclick="switchScreen('student-notifications-screen')">🔔</span>
+                <span onclick="switchScreen('student-achievements-screen')">🏆</span>
+                <span onclick="switchScreen('student-chat-screen')">✉️</span>
+                <span onclick="switchScreen('student-stats-screen')">📊</span>
+                <span onclick="switchScreen('student-friends-screen')">👥</span>
+                <span onclick="switchScreen('student-groups-screen')">📌</span>
+                <span onclick="switchScreen('student-offline-screen')">📴</span>
+                <span onclick="switchScreen('student-profile-screen')">👤</span>
+            </div>
+            <div class="bottom-nav" id="company-nav" style="display: none;">
+                <span class="active" onclick="switchScreen('company-home-screen')">🏠</span>
+                <span onclick="switchScreen('company-messages-screen')">✉️</span>
+                <span onclick="switchScreen('company-ranking-screen')">🏅</span>
+                <span onclick="switchScreen('company-analytics-screen')">📊</span>
+                <span onclick="switchScreen('company-profile-screen')">👤</span>
+            </div>
         </div>
 
-        <!-- Экран аналитики компании -->
-        <div id="company-analytics-screen" class="screen">
-            <h2 data-lang="analytics">Аналитика</h2>
-            <h3 data-lang="candidate_stats">Статистика кандидатов</h3>
-            <p data-lang="candidates_viewed">Просмотрено кандидатов: <span id="analytics-candidates-viewed">150</span></p>
-            <p data-lang="offers_sent">Отправлено офферов: <span id="analytics-offers-sent">20</span></p>
-            <p data-lang="offers_accepted">Принято офферов: <span id="analytics-offers-accepted">10</span></p>
-            <h3 data-lang="skill_trends">Тренды навыков</h3>
-            <p data-lang="top_skill">Популярный навык: <span>Аналитика</span></p>
-        </div>
-
-        <!-- Экран профиля компании -->
-        <div id="company-profile-screen" class="screen">
-            <h2 data-lang="company_profile">Личный кабинет</h2>
-            <h3 data-lang="company_details">Профиль компании</h3>
-            <p data-lang="name_label">Имя: <span id="company-name">Не указано</span></p>
-            <p data-lang="region_label">Регион: <span id="company-region">Москва, РФ</span></p>
-            <p data-lang="status">Статус: <span id="company-status">Компания</span></p>
-            <button onclick="toggleTheme()" data-lang="toggle_theme">Переключить тему</button>
-            <button onclick="resetUserData()" data-lang="reset">Сбросить данные</button>
-        </div>
-
-        <!-- Панель навигации школьника -->
-        <div id="student-nav" class="bottom-nav" style="display: none;">
-            <span class="active" onclick="switchScreen('student-home-screen')">🏠</span>
-            <span onclick="switchScreen('student-map-screen')">🗺️</span>
-            <span onclick="switchScreen('student-calendar-screen')">📅</span>
-            <span onclick="switchScreen('student-notifications-screen')">🔔</span>
-            <span onclick="switchScreen('student-achievements-screen')">🏅</span>
-            <span onclick="switchScreen('student-chat-screen')">💬</span>
-            <span onclick="switchScreen('student-stats-screen')">📊</span>
-            <span onclick="switchScreen('student-friends-screen')">👥</span>
-            <span onclick="switchScreen('student-groups-screen')">👥</span>
-            <span onclick="switchScreen('student-offline-screen')">📴</span>
-            <span onclick="switchScreen('student-profile-screen')">👤</span>
-        </div>
-
-        <!-- Панель навигации компании -->
-        <div id="company-nav" class="bottom-nav" style="display: none;">
-            <span class="active" onclick="switchScreen('company-home-screen')">🏠</span>
-            <span onclick="switchScreen('company-chat-screen')">✉️</span>
-            <span onclick="switchScreen('company-ranking-screen')">🏅</span>
-            <span onclick="switchScreen('company-analytics-screen')">📊</span>
-            <span onclick="switchScreen('company-profile-screen')">👤</span>
+        <!-- Василиса -->
+        <div class="vasilisa-container" onclick="toggleVasilisa()">
+            <img src="photo_2025-04-21_14-57-26.png" alt="Василиса">
+            <div class="message" id="vasilisa-message" data-lang="vasilisa-welcome">Привет! Я Василиса, помогу тебе!</div>
         </div>
     </div>
 
     <script src="common.js"></script>
     <script src="student.js"></script>
     <script src="company.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            switchLanguage();
-            loadUserData();
-            getAIRecommendations();
-            getRecommendedEvents();
-        });
-    </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'934fbfd3efaa070f',t:'MTc0NTQzNjM1Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
