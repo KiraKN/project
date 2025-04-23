@@ -48,7 +48,7 @@ function register(role) {
     if (name && age && region) {
         const userData = { role, name, age, region, status: role === "student" ? "Школьник" : "Компания" };
         localStorage.setItem("userData", JSON.stringify(userData));
-        loadUserData(); // Вызываем обновлённую функцию из common.js
+        loadUserData();
     } else {
         alert("Пожалуйста, заполните все поля!");
     }
@@ -106,7 +106,8 @@ function studentSearchEvents() {
     const events = document.querySelectorAll("#all-events .event-card");
     events.forEach(event => {
         const title = event.querySelector("h3").textContent.toLowerCase();
-        event.style.display = title.includes(query) ? "flex" : "none";
+        const description = event.querySelector(".event-description").textContent.toLowerCase();
+        event.style.display = (title.includes(query) || description.includes(query)) ? "flex" : "none";
     });
 }
 
@@ -253,7 +254,7 @@ function studentRateEvent() {
     eventCard.setAttribute("data-rating", currentRating.toFixed(1));
     eventCard.setAttribute("data-rating-count", ratingCount);
     eventCard.querySelector(".rating").textContent = currentRating.toFixed(1);
-    eventCard.querySelector(".event-average-rating span").textContent = currentRating.toFixed(1);
+    eventCard.querySelector(".event-average-rating span.rating").textContent = currentRating.toFixed(1);
     alert(`Вы оценили ${currentContest} на ${rating} звезд!`);
     studentPoints += 5;
     updateAchievements();
@@ -271,7 +272,7 @@ function studentSubmitReview() {
         studentReviewsWritten++;
         studentPoints += 5;
         updateStats();
-        openContest(currentContest); // Обновляем экран с отзывами
+        openContest(currentContest);
     } else {
         alert("Пожалуйста, напишите отзыв!");
     }
